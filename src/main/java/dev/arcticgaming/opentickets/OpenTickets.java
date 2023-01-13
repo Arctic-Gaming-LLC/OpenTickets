@@ -52,11 +52,7 @@ public final class OpenTickets extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        try {
-            Ticket.saveTickets();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     public static void initTickets() throws FileNotFoundException {

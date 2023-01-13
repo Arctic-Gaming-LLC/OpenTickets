@@ -23,11 +23,10 @@ public class Ticket {
     @Getter @Setter public UUID ticketUUID;
     @Getter @Setter public UUID playerUUID;
     @Getter @Setter public String playerName;
-
     @Getter @Setter String world;
-    @Getter @Setter double x;
-    @Getter @Setter double y;
-    @Getter @Setter double z;
+    @Getter @Setter String x;
+    @Getter @Setter String y;
+    @Getter @Setter String z;
     @Getter @Setter public int priority;
     @Getter @Setter public String note;
 
@@ -36,18 +35,18 @@ public class Ticket {
     public Ticket(Player player, String note) {
 
         if (player == null) {
-            this.x = 0;
-            this.y = 70;
-            this.z = 0;
+            this.x = "0";
+            this.y = "70";
+            this.z = "0";
             this.world = "world";
             this.playerName = "null Player";
             this.playerUUID = UUID.randomUUID();
         } else {
             Location location = player.getLocation();
             this.world = location.getWorld().getName();
-            this.x = location.getX();
-            this.y = location.getY();
-            this.z = location.getZ();
+            this.x = ("" + location.getX());
+            this.y = ("" + location.getY());
+            this.z = ("" + location.getZ());
             this.playerUUID = player.getUniqueId();
             this.playerName = player.getName();
         }

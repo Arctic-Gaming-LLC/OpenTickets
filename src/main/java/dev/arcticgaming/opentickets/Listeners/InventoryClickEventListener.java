@@ -1,5 +1,6 @@
 package dev.arcticgaming.opentickets.Listeners;
 
+import dev.arcticgaming.opentickets.GUI.TicketViewer;
 import dev.arcticgaming.opentickets.Objects.Ticket;
 import dev.arcticgaming.opentickets.OpenTickets;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
@@ -27,7 +28,7 @@ public class InventoryClickEventListener implements Listener {
         ItemStack item = event.getCurrentItem();
         Player player = Bukkit.getPlayer(event.getWhoClicked().getUniqueId());
 
-        if (inventoryName.contains("Ticket Viewer") && item != null){
+        if (inventoryName.contains("Ticket Viewer") && item != null && player != null){
             event.setCancelled(true);
             ClickType clickType = event.getClick();
 
@@ -37,8 +38,12 @@ public class InventoryClickEventListener implements Listener {
 
             switch (clickType) {
                 case LEFT -> {
-                    assert player != null;
-                    Location location = new Location(Bukkit.getWorld(ticket.getWorld()), ticket.getX(), ticket.getY(), ticket.getZ());
+
+                    double x = Double.parseDouble(ticket.getX());
+                    double y = Double.parseDouble(ticket.getY());
+                    double z = Double.parseDouble(ticket.getZ());
+
+                    Location location = new Location(Bukkit.getWorld(ticket.getWorld()), x, y, z);
                     player.teleport(location);
                 }
                 case RIGHT -> {
@@ -48,6 +53,8 @@ public class InventoryClickEventListener implements Listener {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    player.closeInventory();
+                    new TicketViewer().ticketViewer(player);
                 }
                 case SHIFT_RIGHT -> {
                     Ticket.closeTicket(ticket);
@@ -56,6 +63,8 @@ public class InventoryClickEventListener implements Listener {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    player.closeInventory();
+                    new TicketViewer().ticketViewer(player);
                 }
                 default -> {
                 }

@@ -6,7 +6,7 @@
 
     <groupId>dev.arcticgaming</groupId>
     <artifactId>OpenTickets</artifactId>
-    <version>0.2-alpha</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>OpenTickets</name>
