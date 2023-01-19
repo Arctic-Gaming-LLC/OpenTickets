@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import dev.arcticgaming.opentickets.Commands.createTicketCommand;
+import dev.arcticgaming.opentickets.Commands.reload;
 import dev.arcticgaming.opentickets.Commands.viewTicketsCommand;
 import dev.arcticgaming.opentickets.Listeners.InventoryClickEventListener;
 import dev.arcticgaming.opentickets.Listeners.PlayerLoginEventListener;
@@ -11,6 +12,8 @@ import dev.arcticgaming.opentickets.Objects.Ticket;
 import dev.arcticgaming.opentickets.Utils.TicketDeserializer;
 import dev.arcticgaming.opentickets.Utils.UUIDDeserializer;
 import lombok.Getter;
+import lombok.Setter;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
@@ -28,13 +31,26 @@ public final class OpenTickets extends JavaPlugin implements Listener {
     @Getter
     public static OpenTickets plugin;
 
+
+    @Getter @Setter
+    public static TextColor PRIMARY_COLOR;
+    @Getter @Setter
+    public static TextColor SECONDARY_COLOR;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
 
+        getConfig();
+        saveDefaultConfig();
+
+        PRIMARY_COLOR = TextColor.fromHexString(getConfig().getString("Colors.primary_color"));
+        SECONDARY_COLOR = TextColor.fromHexString(getConfig().getString("Colors.secondary_color"));
+
         Objects.requireNonNull(getCommand("createTicket")).setExecutor(new createTicketCommand());
         Objects.requireNonNull(getCommand("viewTickets")).setExecutor(new viewTicketsCommand());
+        Objects.requireNonNull(getCommand("reloadTickets")).setExecutor(new reload());
 
         Bukkit.getPluginManager().registerEvents(this,this);
         final PluginManager pm = getServer().getPluginManager();

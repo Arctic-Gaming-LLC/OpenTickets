@@ -10,3 +10,5 @@ commands:
   viewTickets:
     description: opens Ticket Viewer!
     permissions: "opentickets.admin"
+  reloadTickets:
+    description: reloads the plugin!

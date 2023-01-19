@@ -27,7 +27,7 @@ public class TicketViewer implements InventoryHolder, Listener {
 
         Component guiTitle = Component.text()
                 .content("Ticket Viewer")
-                .color(TextColor.color(0x00c3e6))
+                .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
                 .build();
 
         Inventory ticketViewer = Bukkit.createInventory(player, 54, guiTitle);
@@ -42,20 +42,22 @@ public class TicketViewer implements InventoryHolder, Listener {
 
             Component displayName = Component.text()
                     .content(ticket.playerName)
-                    .color(TextColor.color(0xffbf00))
+                    .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
                     .build();
 
             List<Component> loreList = new ArrayList<>();
 
             Component lore1 = Component.text()
-                    .content("Priority :" + ticket.priority)
-                    .color(TextColor.color(0xfff200))
+                    .content("Priority: " + ticket.priority)
+                    .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
                     .build();
 
             Component lore2 = Component.text()
-                    .content("Issue :" + ticket.note)
-                    .color(TextColor.color(0xe3e3e3))
+                    .content("Issue: " + ticket.note)
+                    .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
                     .build();
+
+
 
             loreList.add(lore1);
             loreList.add(lore2);
