@@ -6,6 +6,8 @@ A general purpose minecraft-ticketing tool
 - /createticket <issue>
 - /viewtickets
 `permission: opentickets.admin'
+- /reloadTickets
+`permission: opentickets.admin'
 
 ## View Ticket GUI
 - Left-Click: teleport to ticket submission location
