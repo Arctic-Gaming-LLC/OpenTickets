@@ -1,3 +1,7 @@
 Colors:
   primary_color: "#e8d500"
   secondary_color: "#e8a200"
+Support Groups:
+  - default
+  - Admin
+  - OP

@@ -1,6 +1,6 @@
 package dev.arcticgaming.opentickets.Commands;
 
-import dev.arcticgaming.opentickets.Objects.Ticket;
+import dev.arcticgaming.opentickets.Utils.TicketManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -35,7 +35,7 @@ public class createTicketCommand implements CommandExecutor {
         String note = stringBuilder.toString();
 
         try {
-            Ticket.createTicket(player, note);
+            TicketManager.createTicket(player, note);
         } catch (NullPointerException e){
             e.printStackTrace();
         }

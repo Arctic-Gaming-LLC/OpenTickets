@@ -18,13 +18,9 @@ public class TicketDeserializer implements JsonDeserializer<Ticket> {
         Ticket ticket = new Ticket(Bukkit.getPlayer(playerUUID), storedNote);
 
         ticket.setTicketUUID(UUID.fromString(jsonObject.get("ticketUUID").getAsString()));
-
         ticket.setPlayerUUID(playerUUID);
-        ticket.setWorld(jsonObject.get("world").getAsString());
-        ticket.setX(jsonObject.get("x").getAsString());
-        ticket.setY(jsonObject.get("y").getAsString());
-        ticket.setZ(jsonObject.get("z").getAsString());
-        ticket.setPriority(jsonObject.get("priority").getAsInt());
+        ticket.setLocation(jsonObject.get("location").getAsString());
+        ticket.setSupportGroup(jsonObject.get("supportGroup").getAsInt());
         ticket.setPlayerName(jsonObject.get("playerName").getAsString());
 
         return ticket;

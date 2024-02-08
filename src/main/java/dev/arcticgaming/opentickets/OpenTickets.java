@@ -15,7 +15,6 @@ import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,14 +27,10 @@ import java.util.UUID;
 
 public final class OpenTickets extends JavaPlugin implements Listener {
 
-    @Getter
-    public static OpenTickets plugin;
+    @Getter public static OpenTickets plugin;
 
-
-    @Getter @Setter
-    public static TextColor PRIMARY_COLOR;
-    @Getter @Setter
-    public static TextColor SECONDARY_COLOR;
+    @Getter @Setter public static TextColor PRIMARY_COLOR;
+    @Getter @Setter public static TextColor SECONDARY_COLOR;
 
     @Override
     public void onEnable() {
@@ -45,18 +40,22 @@ public final class OpenTickets extends JavaPlugin implements Listener {
         getConfig();
         saveDefaultConfig();
 
+        //Get Config Options for coloration
         PRIMARY_COLOR = TextColor.fromHexString(getConfig().getString("Colors.primary_color"));
         SECONDARY_COLOR = TextColor.fromHexString(getConfig().getString("Colors.secondary_color"));
 
+        //Establish Commands
         Objects.requireNonNull(getCommand("createTicket")).setExecutor(new createTicketCommand());
         Objects.requireNonNull(getCommand("viewTickets")).setExecutor(new viewTicketsCommand());
         Objects.requireNonNull(getCommand("reloadTickets")).setExecutor(new reload());
 
-        Bukkit.getPluginManager().registerEvents(this,this);
+        //Register Listeners
+        Bukkit.getPluginManager().registerEvents(this, this);
         final PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new InventoryClickEventListener(), this);
         pm.registerEvents(new PlayerLoginEventListener(), this);
 
+        //Load and initialize existing tickets
         try {
             initTickets();
         } catch (FileNotFoundException e) {
@@ -80,17 +79,19 @@ public final class OpenTickets extends JavaPlugin implements Listener {
 
             Reader reader = new FileReader(file);
 
-            Type type = new TypeToken<HashMap<UUID, Ticket>>() {}.getType();
+            Type type = new TypeToken<HashMap<UUID, Ticket>>() {
+            }.getType();
             HashMap<UUID, Ticket> clonedMap = gson.fromJson(reader, type);
 
-                for (UUID uuid: clonedMap.keySet()){
+            for (UUID uuid : clonedMap.keySet()) {
 
-                    Ticket.currentTickets.put(uuid, clonedMap.get(uuid));
-                    Ticket ticket = Ticket.currentTickets.get(uuid);
-                    if (ticket.priority == 2){
-                        plugin.getLogger().warning(ChatColor.YELLOW + "Priority 2 tickets are open!");
-                }
+                Ticket.currentTickets.put(uuid, clonedMap.get(uuid));
             }
         }
     }
 }
+
+/*TODO
+Implement report cooldowns
+Implement Priorities and Bug Tags
+ */

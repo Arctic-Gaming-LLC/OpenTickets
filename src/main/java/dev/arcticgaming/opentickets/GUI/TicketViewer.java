@@ -48,7 +48,7 @@ public class TicketViewer implements InventoryHolder, Listener {
             List<Component> loreList = new ArrayList<>();
 
             Component lore1 = Component.text()
-                    .content("Priority: " + ticket.priority)
+                    .content("Priority: " + ticket.supportGroup)
                     .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
                     .build();
 
