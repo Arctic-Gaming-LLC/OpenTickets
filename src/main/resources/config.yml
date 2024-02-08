@@ -11,11 +11,14 @@ Colors:
 # tickets can get sorted into. Sorting into a group will enable
 # ticket notifications (if enabled) for users who have that group.
 #
+# DO NOT USE SPACES! USE UNDERSCORES! The plugin converts these names
+# for permission groups directly! "Two Groups" -> "two_groups"
+#
 # To assign a user to a support group, use permission `ticket.group.<name>'
 Support Groups:
   - mods
   - devs
   - admins
-  - silly geese
+  - silly_geese
 
 Ticket Notifications: true

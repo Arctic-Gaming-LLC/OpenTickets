@@ -86,7 +86,7 @@ public final class OpenTickets extends JavaPlugin implements Listener {
             HashMap<UUID, Ticket> clonedMap = gson.fromJson(reader, type);
 
             for (UUID uuid : clonedMap.keySet()) {
-                Ticket.currentTickets.put(uuid, clonedMap.get(uuid));
+                TicketManager.CURRENT_TICKETS.put(uuid, clonedMap.get(uuid));
             }
         }
     }

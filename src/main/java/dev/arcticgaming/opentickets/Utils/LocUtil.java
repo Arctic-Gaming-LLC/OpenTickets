@@ -14,9 +14,8 @@ public class LocUtil {
         double y = location.y();
         double z = location.z();
         UUID uuid = location.getWorld().getUID();
-        String finalLoc = x + ":" + y + ":" + z + ":" + uuid;
 
-        return finalLoc;
+        return x + ":" + y + ":" + z + ":" + uuid;
     }
 
     public static Location stringToLoc(String string){

@@ -35,7 +35,7 @@ public class InventoryClickEventListener implements Listener {
 
             NamespacedKey key = new NamespacedKey(OpenTickets.plugin, "TICKET_UUID");
             UUID ticketUUID = UUID.fromString(Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING)));
-            Ticket ticket = Ticket.currentTickets.get(ticketUUID);
+            Ticket ticket = TicketManager.CURRENT_TICKETS.get(ticketUUID);
 
             switch (clickType) {
                 case LEFT -> {
