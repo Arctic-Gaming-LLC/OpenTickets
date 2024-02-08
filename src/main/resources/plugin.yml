@@ -9,6 +9,5 @@ commands:
     description: creates a new ticket!
   viewTickets:
     description: opens Ticket Viewer!
-    permissions: "opentickets.admin"
   reloadTickets:
     description: reloads the plugin!

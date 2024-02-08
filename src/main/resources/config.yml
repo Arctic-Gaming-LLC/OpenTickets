@@ -1,7 +1,21 @@
+#-----| GUI and Style
+# Just a section dedicated to your stylization of the GUI
+# There's nothing really that fancy for now.
 Colors:
   primary_color: "#e8d500"
   secondary_color: "#e8a200"
+
+#-----| Support Groups
+# By default, each new Ticket will be created with a "default"
+# group. Theses are YOUR custom groups that those "default"
+# tickets can get sorted into. Sorting into a group will enable
+# ticket notifications (if enabled) for users who have that group.
+#
+# To assign a user to a support group, use permission `ticket.group.<name>'
 Support Groups:
-  - default
-  - Admin
-  - OP
+  - mods
+  - devs
+  - admins
+  - silly geese
+
+Ticket Notifications: true

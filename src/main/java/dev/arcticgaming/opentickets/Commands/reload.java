@@ -25,17 +25,22 @@ public class reload implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if (sender.hasPermission("opentickets.admin")) {
+        if (sender.hasPermission("tickets.admin") || sender.hasPermission("tickets.reload") || sender.isOp()) {
 
             OpenTickets.plugin.reloadConfig();
 
+            //updates the colors and styles!
             OpenTickets.PRIMARY_COLOR = TextColor.fromHexString(Objects.requireNonNull(OpenTickets.getPlugin().getConfig().getString("Colors.primary_color")));
             OpenTickets.SECONDARY_COLOR = TextColor.fromHexString(Objects.requireNonNull(OpenTickets.getPlugin().getConfig().getString("Colors.secondary_color")));
+
+            //updates Support Groups!
+            OpenTickets.createSupportGroups();
 
             sender.sendMessage("The config has been reloaded!");
         } else {
             sender.sendMessage("You do not have permission to use this command.");
         }
+
         return true;
     }
 }

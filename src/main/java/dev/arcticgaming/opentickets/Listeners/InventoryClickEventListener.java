@@ -42,7 +42,7 @@ public class InventoryClickEventListener implements Listener {
                     player.teleport(LocUtil.stringToLoc(ticket.getLocation()));
                 }
                 case RIGHT -> {
-                    ticket.setSupportGroup(2);
+                    ticket.setSupportGroup("default");
                     try {
                         TicketManager.saveTickets();
                     } catch (IOException e) {

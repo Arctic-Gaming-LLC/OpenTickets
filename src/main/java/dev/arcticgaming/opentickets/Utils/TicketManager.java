@@ -10,17 +10,21 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class TicketManager {
 
-    public static Map<UUID, Ticket> currentTickets = new HashMap<>();
+    public static Map<UUID, Ticket> CURRENT_TICKETS = new HashMap<>();
+    public static Set<String> SUPPORT_GROUPS = new HashSet<>();
+
+    public static void addGroup(String group) {
+        SUPPORT_GROUPS.add(group);
+    }
+
     public static void createTicket(Player player, String note){
         Ticket newTicket = new Ticket(player, note);
 
-        currentTickets.put(newTicket.ticketUUID, newTicket);
+        CURRENT_TICKETS.put(newTicket.ticketUUID, newTicket);
         try {
             saveTickets();
         } catch (IOException e){
@@ -43,10 +47,10 @@ public class TicketManager {
         }
         file.createNewFile();
 
-        if (!currentTickets.isEmpty()) {
+        if (!CURRENT_TICKETS.isEmpty()) {
             Writer writer = new FileWriter(file, false);
 
-            gson.toJson(currentTickets, writer);
+            gson.toJson(CURRENT_TICKETS, writer);
             writer.flush();
             writer.close();
         } else {
@@ -56,7 +60,7 @@ public class TicketManager {
     }
 
     public static void closeTicket(Ticket ticket) {
-        currentTickets.remove(ticket.ticketUUID);
+        CURRENT_TICKETS.remove(ticket.ticketUUID);
         try {
             saveTickets();
         } catch (IOException e){

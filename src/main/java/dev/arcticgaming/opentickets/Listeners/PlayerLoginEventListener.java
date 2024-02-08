@@ -24,7 +24,7 @@ public class PlayerLoginEventListener implements Listener {
 
 
 
-        if (player.hasPermission("opentickets.admin")) {
+        if (player.hasPermission("tickets.admin")) {
             if (!Ticket.currentTickets.isEmpty()) {
 
                 TextColor colorPrimary = TextColor.fromHexString(Objects.requireNonNull(OpenTickets.getPlugin().getConfig().get("Colors.primary_color")).toString());

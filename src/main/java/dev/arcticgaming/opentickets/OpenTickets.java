@@ -10,6 +10,7 @@ import dev.arcticgaming.opentickets.Listeners.InventoryClickEventListener;
 import dev.arcticgaming.opentickets.Listeners.PlayerLoginEventListener;
 import dev.arcticgaming.opentickets.Objects.Ticket;
 import dev.arcticgaming.opentickets.Utils.TicketDeserializer;
+import dev.arcticgaming.opentickets.Utils.TicketManager;
 import dev.arcticgaming.opentickets.Utils.UUIDDeserializer;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,9 +22,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 public final class OpenTickets extends JavaPlugin implements Listener {
 
@@ -72,6 +71,9 @@ public final class OpenTickets extends JavaPlugin implements Listener {
 
     public static void initTickets() throws FileNotFoundException {
 
+        //Updates Support Groups from config
+        createSupportGroups();
+
         Gson gson = new GsonBuilder().registerTypeAdapter(UUID.class, new UUIDDeserializer()).registerTypeAdapter(Ticket.class, new TicketDeserializer()).setPrettyPrinting().create();
         File file = new File(OpenTickets.getPlugin().getDataFolder().getAbsolutePath() + "/tickets.json");
 
@@ -84,14 +86,23 @@ public final class OpenTickets extends JavaPlugin implements Listener {
             HashMap<UUID, Ticket> clonedMap = gson.fromJson(reader, type);
 
             for (UUID uuid : clonedMap.keySet()) {
-
                 Ticket.currentTickets.put(uuid, clonedMap.get(uuid));
             }
+        }
+    }
+
+    public static void createSupportGroups() {
+
+        //Since we'll use this universally - lets just clear it first!
+        TicketManager.SUPPORT_GROUPS.clear();
+
+        List<String> customSupportGroups = OpenTickets.getPlugin().getConfig().getStringList("Support Groups");
+        for (String group : customSupportGroups) {
+            TicketManager.addGroup(group);
         }
     }
 }
 
 /*TODO
 Implement report cooldowns
-Implement Priorities and Bug Tags
  */

@@ -20,7 +20,7 @@ public class TicketDeserializer implements JsonDeserializer<Ticket> {
         ticket.setTicketUUID(UUID.fromString(jsonObject.get("ticketUUID").getAsString()));
         ticket.setPlayerUUID(playerUUID);
         ticket.setLocation(jsonObject.get("location").getAsString());
-        ticket.setSupportGroup(jsonObject.get("supportGroup").getAsInt());
+        ticket.setSupportGroup(jsonObject.get("supportGroup").getAsString());
         ticket.setPlayerName(jsonObject.get("playerName").getAsString());
 
         return ticket;
