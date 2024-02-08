@@ -1,7 +1,7 @@
 name: OpenTickets
-version: '${project.version}'
+version: '${version}'
 main: dev.arcticgaming.opentickets.OpenTickets
-api-version: 1.19
+api-version: '1.20'
 authors: [ ArcticDev_ ]
 description: An open-sourced Minecraft Ticket Plugin
 commands:
