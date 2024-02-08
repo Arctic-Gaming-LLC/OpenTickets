@@ -2,6 +2,7 @@ package dev.arcticgaming.opentickets.GUI;
 
 import dev.arcticgaming.opentickets.Objects.Ticket;
 import dev.arcticgaming.opentickets.OpenTickets;
+import dev.arcticgaming.opentickets.Utils.TicketManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
@@ -35,11 +36,11 @@ public class TicketViewer implements InventoryHolder, Listener {
         NamespacedKey key = new NamespacedKey(OpenTickets.getPlugin(OpenTickets.class), "TICKET_UUID");
 
         int slotNumber = 0;
-        for (UUID ticketUUID : Ticket.currentTickets.keySet()) {
+        for (UUID ticketUUID : TicketManager.CURRENT_TICKETS.keySet()) {
 
-            Ticket ticket = Ticket.currentTickets.get(ticketUUID);
+            Ticket ticket = TicketManager.CURRENT_TICKETS.get(ticketUUID);
             String permission = "tickets.group." + ticket.getSupportGroup();
-            if (player.hasPermission(permission) || player.hasPermission("tickets.admin") || player.isOp()) {
+            if (player.hasPermission("tickets.admin") || player.isOp() || player.hasPermission(permission)) {
                 String currentTicketUUID = ticket.ticketUUID.toString();
 
                 Component displayName = Component.text()
