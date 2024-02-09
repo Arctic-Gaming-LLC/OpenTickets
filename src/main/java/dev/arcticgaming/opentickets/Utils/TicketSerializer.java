@@ -10,6 +10,7 @@ public class TicketSerializer implements JsonSerializer<Ticket> {
     public JsonElement serialize(Ticket ticket, Type type, JsonSerializationContext jsonSerializationContext) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("ticketUUID", new JsonPrimitive(ticket.getTicketUUID().toString()));
+        jsonObject.add("ticketName", new JsonPrimitive(ticket.getTicketUUID().toString()));
         jsonObject.add("playerUUID", new JsonPrimitive(ticket.getPlayerUUID().toString()));
         jsonObject.add("playerName", new JsonPrimitive(ticket.getPlayerName()));
         jsonObject.add("location", new JsonPrimitive(ticket.getLocation()));

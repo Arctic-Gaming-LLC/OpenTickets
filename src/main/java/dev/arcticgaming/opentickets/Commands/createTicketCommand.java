@@ -1,5 +1,6 @@
 package dev.arcticgaming.opentickets.Commands;
 
+import dev.arcticgaming.opentickets.Objects.Ticket;
 import dev.arcticgaming.opentickets.OpenTickets;
 import dev.arcticgaming.opentickets.Utils.TicketManager;
 import org.bukkit.command.Command;

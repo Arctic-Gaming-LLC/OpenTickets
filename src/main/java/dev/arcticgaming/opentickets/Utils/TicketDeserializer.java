@@ -8,21 +8,19 @@ import java.lang.reflect.Type;
 import java.util.UUID;
 
 public class TicketDeserializer implements JsonDeserializer<Ticket> {
+
     @Override
     public Ticket deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
 
+        UUID ticketUUID = UUID.fromString(jsonObject.get("ticketUUID").getAsString());
+        String ticketName = jsonObject.get("ticketName").getAsString();
         UUID playerUUID = UUID.fromString(jsonObject.get("playerUUID").getAsString());
-        String storedNote = jsonObject.get("note").getAsString();
+        String playerName = jsonObject.get("playerName").getAsString();
+        String location = jsonObject.get("location").getAsString();
+        String supportGroup = jsonObject.get("supportGroup").getAsString();
+        String note = jsonObject.get("note").getAsString();
 
-        Ticket ticket = new Ticket(Bukkit.getPlayer(playerUUID), storedNote);
-
-        ticket.setTicketUUID(UUID.fromString(jsonObject.get("ticketUUID").getAsString()));
-        ticket.setPlayerUUID(playerUUID);
-        ticket.setLocation(jsonObject.get("location").getAsString());
-        ticket.setSupportGroup(jsonObject.get("supportGroup").getAsString());
-        ticket.setPlayerName(jsonObject.get("playerName").getAsString());
-
-        return ticket;
+        return new Ticket(ticketUUID, ticketName, playerUUID, playerName, location, supportGroup, note);
     }
 }

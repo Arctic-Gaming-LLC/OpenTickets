@@ -3,9 +3,7 @@ package dev.arcticgaming.opentickets;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import dev.arcticgaming.opentickets.Commands.createTicketCommand;
-import dev.arcticgaming.opentickets.Commands.reload;
-import dev.arcticgaming.opentickets.Commands.viewTicketsCommand;
+import dev.arcticgaming.opentickets.Commands.*;
 import dev.arcticgaming.opentickets.Listeners.InventoryClickEventListener;
 import dev.arcticgaming.opentickets.Listeners.PlayerLoginEventListener;
 import dev.arcticgaming.opentickets.Objects.Ticket;
@@ -47,6 +45,8 @@ public final class OpenTickets extends JavaPlugin implements Listener {
         Objects.requireNonNull(getCommand("createTicket")).setExecutor(new createTicketCommand());
         Objects.requireNonNull(getCommand("viewTickets")).setExecutor(new viewTicketsCommand());
         Objects.requireNonNull(getCommand("reloadTickets")).setExecutor(new reload());
+        Objects.requireNonNull(getCommand("changeTicketGroup")).setExecutor(new ChangeTicketGroupCommand());
+        getCommand("changeTicketGroup").setTabCompleter(new ChangeTicketGroupTabCompleter());
 
         //Register Listeners
         Bukkit.getPluginManager().registerEvents(this, this);

@@ -59,6 +59,28 @@ public class TicketManager {
         }
     }
 
+    public static void updateTicket(Ticket updatedTicket) {
+        if (CURRENT_TICKETS.containsKey(updatedTicket.getTicketUUID())) {
+            CURRENT_TICKETS.put(updatedTicket.getTicketUUID(), updatedTicket);
+            try {
+                saveTickets();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Ticket with UUID " + updatedTicket.getTicketUUID() + " not found in CURRENT_TICKETS map.");
+        }
+    }
+
+    public static Ticket getTicketByName(String ticketName) {
+        for (Ticket ticket : CURRENT_TICKETS.values()) {
+            if (ticket.getTicketName().equals(ticketName)) {
+                return ticket;
+            }
+        }
+        return null; // Ticket with the specified name not found
+    }
+
     public static void closeTicket(Ticket ticket) {
         CURRENT_TICKETS.remove(ticket.ticketUUID);
         try {

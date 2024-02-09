@@ -11,3 +11,5 @@ commands:
     description: opens Ticket Viewer!
   reloadTickets:
     description: reloads the plugin!
+  changeTicketGroup:
+    description: change a tickets support group!

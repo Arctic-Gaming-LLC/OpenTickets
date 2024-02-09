@@ -44,18 +44,23 @@ public class TicketViewer implements InventoryHolder, Listener {
                 String currentTicketUUID = ticket.ticketUUID.toString();
 
                 Component displayName = Component.text()
-                        .content(ticket.playerName)
+                        .content(ticket.ticketUUID.toString())
                         .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
                         .build();
 
                 List<Component> loreList = new ArrayList<>();
 
                 Component lore1 = Component.text()
-                        .content("Support Group: " + ticket.supportGroup)
+                        .content("Player Owner: " + ticket.playerName)
                         .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
                         .build();
 
                 Component lore2 = Component.text()
+                        .content("Support Group: " + ticket.supportGroup)
+                        .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
+                        .build();
+
+                Component lore3 = Component.text()
                         .content("Issue: " + ticket.note)
                         .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
                         .build();
@@ -63,6 +68,7 @@ public class TicketViewer implements InventoryHolder, Listener {
 
                 loreList.add(lore1);
                 loreList.add(lore2);
+                loreList.add(lore3);
 
                 ItemStack item = new ItemStack(Material.PAPER);
                 ItemMeta itemMeta = item.getItemMeta();
