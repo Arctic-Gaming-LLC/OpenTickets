@@ -3,9 +3,10 @@ package dev.arcticgaming.opentickets.Listeners;
 import dev.arcticgaming.opentickets.GUI.TicketViewer;
 import dev.arcticgaming.opentickets.Objects.Ticket;
 import dev.arcticgaming.opentickets.OpenTickets;
+import dev.arcticgaming.opentickets.Utils.LocUtil;
+import dev.arcticgaming.opentickets.Utils.TicketManager;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,22 +35,16 @@ public class InventoryClickEventListener implements Listener {
 
             NamespacedKey key = new NamespacedKey(OpenTickets.plugin, "TICKET_UUID");
             UUID ticketUUID = UUID.fromString(Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING)));
-            Ticket ticket = Ticket.currentTickets.get(ticketUUID);
+            Ticket ticket = TicketManager.CURRENT_TICKETS.get(ticketUUID);
 
             switch (clickType) {
                 case LEFT -> {
-
-                    double x = Double.parseDouble(ticket.getX());
-                    double y = Double.parseDouble(ticket.getY());
-                    double z = Double.parseDouble(ticket.getZ());
-
-                    Location location = new Location(Bukkit.getWorld(ticket.getWorld()), x, y, z);
-                    player.teleport(location);
+                    player.teleport(LocUtil.stringToLoc(ticket.getLocation()));
                 }
                 case RIGHT -> {
-                    ticket.setPriority(2);
+                    ticket.setSupportGroup("default");
                     try {
-                        Ticket.saveTickets();
+                        TicketManager.saveTickets();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -57,9 +52,9 @@ public class InventoryClickEventListener implements Listener {
                     new TicketViewer().ticketViewer(player);
                 }
                 case SHIFT_RIGHT -> {
-                    Ticket.closeTicket(ticket);
+                    TicketManager.closeTicket(ticket);
                     try {
-                        Ticket.saveTickets();
+                        TicketManager.saveTickets();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

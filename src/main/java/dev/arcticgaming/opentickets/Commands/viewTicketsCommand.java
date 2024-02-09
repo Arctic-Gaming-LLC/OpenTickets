@@ -25,7 +25,7 @@ public class viewTicketsCommand implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (player.hasPermission("opentickets.admin")){
+        if (player.hasPermission("tickets.admin") || player.hasPermission("tickets.gui") || player.isOp()){
             new TicketViewer().ticketViewer(player);
         }
         return false;

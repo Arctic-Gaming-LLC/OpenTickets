@@ -1,11 +1,15 @@
 package dev.arcticgaming.opentickets.Commands;
 
 import dev.arcticgaming.opentickets.Objects.Ticket;
+import dev.arcticgaming.opentickets.OpenTickets;
+import dev.arcticgaming.opentickets.Utils.TicketManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.logging.Level;
 
 public class createTicketCommand implements CommandExecutor {
 
@@ -35,8 +39,10 @@ public class createTicketCommand implements CommandExecutor {
         String note = stringBuilder.toString();
 
         try {
-            Ticket.createTicket(player, note);
+            TicketManager.createTicket(player, note);
         } catch (NullPointerException e){
+            OpenTickets.getPlugin().getLogger().log(Level.SEVERE, "CRITICAL ERROR! UNABLE TO CREATE TICKET!\n" +
+                    "OpenTickets/Commands/createTicketCommand(line 43)");
             e.printStackTrace();
         }
 
