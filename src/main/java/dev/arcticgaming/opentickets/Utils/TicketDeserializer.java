@@ -5,6 +5,8 @@ import dev.arcticgaming.opentickets.Objects.Ticket;
 import org.bukkit.Bukkit;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class TicketDeserializer implements JsonDeserializer<Ticket> {
@@ -19,8 +21,17 @@ public class TicketDeserializer implements JsonDeserializer<Ticket> {
         String playerName = jsonObject.get("playerName").getAsString();
         String location = jsonObject.get("location").getAsString();
         String supportGroup = jsonObject.get("supportGroup").getAsString();
-        String note = jsonObject.get("note").getAsString();
+        String description = jsonObject.get("description").getAsString();
 
-        return new Ticket(ticketUUID, ticketName, playerUUID, playerName, location, supportGroup, note);
+        // Deserialize the notes HashMap
+        HashMap<String, String> notes = new HashMap<>();
+        if (jsonObject.has("notes")) {
+            JsonObject notesObject = jsonObject.getAsJsonObject("notes");
+            for (Map.Entry<String, JsonElement> entry : notesObject.entrySet()) {
+                notes.put(entry.getKey(), entry.getValue().getAsString());
+            }
+        }
+
+        return new Ticket(ticketUUID, ticketName, playerUUID, playerName, location, supportGroup, description, notes);
     }
 }

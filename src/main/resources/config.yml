@@ -14,6 +14,8 @@ Colors:
 # DO NOT USE SPACES! USE UNDERSCORES! The plugin converts these names
 # for permission groups directly! "Two Groups" -> "two_groups"
 #
+# Limit for Support Groups is 9! Anything after that is getting nuked.
+#
 # To assign a user to a support group, use permission `ticket.group.<name>'
 Support Groups:
   - mods

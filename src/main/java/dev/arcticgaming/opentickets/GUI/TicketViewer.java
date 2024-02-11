@@ -61,7 +61,7 @@ public class TicketViewer implements InventoryHolder, Listener {
                         .build();
 
                 Component lore3 = Component.text()
-                        .content("Issue: " + ticket.note)
+                        .content("Issue: " + ticket.description)
                         .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
                         .build();
 

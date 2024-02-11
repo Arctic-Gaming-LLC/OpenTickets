@@ -21,6 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.logging.Level;
 
 public final class OpenTickets extends JavaPlugin implements Listener {
 
@@ -95,10 +96,13 @@ public final class OpenTickets extends JavaPlugin implements Listener {
 
         //Since we'll use this universally - lets just clear it first!
         TicketManager.SUPPORT_GROUPS.clear();
-
+        int limit = 9;
         List<String> customSupportGroups = OpenTickets.getPlugin().getConfig().getStringList("Support Groups");
         for (String group : customSupportGroups) {
-            TicketManager.addGroup(group);
+            if (limit > 0) {
+                TicketManager.addGroup(group);
+                limit--;
+            }
         }
     }
 }
