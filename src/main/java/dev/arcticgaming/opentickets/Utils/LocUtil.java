@@ -1,5 +1,6 @@
 package dev.arcticgaming.opentickets.Utils;
 
+import dev.arcticgaming.opentickets.OpenTickets;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -23,9 +24,15 @@ public class LocUtil {
         double x = Double.parseDouble(parts[0]);
         double y = Double.parseDouble(parts[1]);
         double z = Double.parseDouble(parts[2]);
-        World world = Bukkit.getWorld(parts[3]);
+        World world;
+        for (World worlds : Bukkit.getWorlds()) {
+            if (UUID.fromString(parts[3]).equals(worlds.getUID())) {
+                world = worlds;
+                return new Location(world, x, y, z);
+            }
+        }
 
+        world = Bukkit.getWorld(OpenTickets.getPlugin().getConfig().getString("default world"));
         return new Location(world, x, y, z);
-
     }
 }

@@ -24,3 +24,8 @@ Support Groups:
   - silly_geese
 
 Ticket Notifications: true
+
+#-----| Overrides
+#
+# Set your default world in case a teleport world location returns null:
+default world: "world"

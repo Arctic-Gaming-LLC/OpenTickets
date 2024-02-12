@@ -21,7 +21,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
-import java.util.logging.Level;
 
 public final class OpenTickets extends JavaPlugin implements Listener {
 
@@ -43,11 +42,8 @@ public final class OpenTickets extends JavaPlugin implements Listener {
         SECONDARY_COLOR = TextColor.fromHexString(getConfig().getString("Colors.secondary_color"));
 
         //Establish Commands
-        Objects.requireNonNull(getCommand("createTicket")).setExecutor(new createTicketCommand());
-        Objects.requireNonNull(getCommand("viewTickets")).setExecutor(new viewTicketsCommand());
-        Objects.requireNonNull(getCommand("reloadTickets")).setExecutor(new reload());
-        Objects.requireNonNull(getCommand("changeTicketGroup")).setExecutor(new ChangeTicketGroupCommand());
-        getCommand("changeTicketGroup").setTabCompleter(new ChangeTicketGroupTabCompleter());
+        Objects.requireNonNull(getCommand("tickets")).setExecutor(new CommandManager());
+        getCommand("tickets").setTabCompleter(new CommandTabCompleter());
 
         //Register Listeners
         Bukkit.getPluginManager().registerEvents(this, this);
@@ -106,7 +102,3 @@ public final class OpenTickets extends JavaPlugin implements Listener {
         }
     }
 }
-
-/*TODO
-Implement report cooldowns
- */

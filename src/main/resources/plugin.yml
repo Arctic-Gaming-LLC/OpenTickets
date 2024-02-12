@@ -5,11 +5,5 @@ api-version: '1.20'
 authors: [ ArcticDev_ ]
 description: An open-sourced Minecraft Ticket Plugin
 commands:
-  createTicket:
-    description: creates a new ticket!
-  viewTickets:
-    description: opens Ticket Viewer!
-  reloadTickets:
-    description: reloads the plugin!
-  changeTicketGroup:
-    description: change a tickets support group!
+  tickets:
+    description: main command starter
