@@ -36,49 +36,61 @@ public class TicketViewer implements InventoryHolder, Listener {
         NamespacedKey key = new NamespacedKey(OpenTickets.getPlugin(OpenTickets.class), "TICKET_UUID");
 
         int slotNumber = 0;
-        for (UUID ticketUUID : TicketManager.CURRENT_TICKETS.keySet()) {
+        if (!TicketManager.CURRENT_TICKETS.isEmpty()) {
+            for (UUID ticketUUID : TicketManager.CURRENT_TICKETS.keySet()) {
 
-            Ticket ticket = TicketManager.CURRENT_TICKETS.get(ticketUUID);
-            String permission = "tickets.group." + ticket.getSupportGroup();
-            if (player.hasPermission("tickets.admin") || player.isOp() || player.hasPermission(permission)) {
-                String currentTicketUUID = ticket.ticketUUID.toString();
+                Ticket ticket = TicketManager.CURRENT_TICKETS.get(ticketUUID);
+                String permission = "tickets.group." + ticket.getSupportGroup();
+                if (player.hasPermission("tickets.admin") || player.isOp() || player.hasPermission(permission)) {
+                    String currentTicketUUID = ticket.ticketUUID.toString();
 
-                Component displayName = Component.text()
-                        .content(ticket.ticketUUID.toString())
-                        .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
-                        .build();
+                    Component displayName = Component.text()
+                            .content(ticket.ticketName)
+                            .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
+                            .build();
 
-                List<Component> loreList = new ArrayList<>();
+                    List<Component> loreList = new ArrayList<>();
 
-                Component lore1 = Component.text()
-                        .content("Player Owner: " + ticket.playerName)
-                        .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
-                        .build();
+                    Component lore1 = Component.text()
+                            .content("Player Owner: " + ticket.playerName)
+                            .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
+                            .build();
 
-                Component lore2 = Component.text()
-                        .content("Support Group: " + ticket.supportGroup)
-                        .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
-                        .build();
+                    Component lore2 = Component.text()
+                            .content("Support Group: " + ticket.supportGroup)
+                            .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
+                            .build();
 
-                Component lore3 = Component.text()
-                        .content("Issue: " + ticket.description)
-                        .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
-                        .build();
+                    Component lore3 = Component.text()
+                            .content("Issue: " + ticket.description)
+                            .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
+                            .build();
+
+                    Component lore4 = Component.text()
+                            .content("Ticket UUID: " + ticket.ticketUUID)
+                            .color(TextColor.color(OpenTickets.SECONDARY_COLOR))
+                            .build();
 
 
-                loreList.add(lore1);
-                loreList.add(lore2);
-                loreList.add(lore3);
+                    loreList.add(lore1);
+                    loreList.add(lore2);
+                    loreList.add(lore3);
+                    loreList.add(lore4);
 
-                ItemStack item = new ItemStack(Material.PAPER);
-                ItemMeta itemMeta = item.getItemMeta();
-                itemMeta.displayName(displayName);
-                itemMeta.lore(loreList);
-                itemMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, currentTicketUUID);
-                item.setItemMeta(itemMeta);
+                    ItemStack item = new ItemStack(Material.PAPER);
+                    ItemMeta itemMeta = item.getItemMeta();
+                    itemMeta.displayName(displayName);
+                    itemMeta.lore(loreList);
+                    itemMeta.getPersistentDataContainer().set(key, PersistentDataType.STRING, currentTicketUUID);
+                    item.setItemMeta(itemMeta);
 
-                ticketViewer.setItem(slotNumber, item);
-                slotNumber++;
+                    ticketViewer.setItem(slotNumber, item);
+                    if (slotNumber < 53) {
+                        slotNumber++;
+                    } else {
+                        break;
+                    }
+                }
             }
         }
 

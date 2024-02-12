@@ -19,6 +19,7 @@ public class CommandManager implements CommandExecutor {
         CREATE,
         RELOAD,
         VIEW_TICKETS,
+        RENAME,
         UNKNOWN;
 
         // Method to convert string command to enum
@@ -45,6 +46,18 @@ public class CommandManager implements CommandExecutor {
         CommandOutput action = (args.length > 0) ? CommandOutput.fromString(args[0]) : CommandOutput.VIEW_TICKETS;
 
         switch (action) {
+            case RENAME:
+                // Handle rename logic here
+                if (isPlayer) {
+                    if (player.hasPermission("tickets.rename") || player.hasPermission("tickets.admin") || player.isOp()) {
+                        RenameTicket.renameTicket(player, args);
+                    } else {
+                        player.sendMessage("You don't have permission: tickets.rename");
+                    }
+                } else {
+                    RenameTicket.renameTicket(player, args);
+                }
+                break;
             case ADD_NOTE:
                 // Handle add_note logic here
                 if (isPlayer) {
@@ -111,7 +124,6 @@ public class CommandManager implements CommandExecutor {
                 }
                 break;
         }
-
         return true;
     }
 }

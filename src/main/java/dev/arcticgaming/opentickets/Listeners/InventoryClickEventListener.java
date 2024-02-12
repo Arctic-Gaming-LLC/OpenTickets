@@ -20,10 +20,15 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
 
 public class InventoryClickEventListener implements Listener {
+    NamespacedKey key = new NamespacedKey(OpenTickets.plugin, "TICKET_UUID");
+
+    private HashMap<UUID, UUID> TICKET_STORED = new HashMap<>();
+
 
     @EventHandler
     public void inventoryClickEventListener(InventoryClickEvent event) {
@@ -35,16 +40,33 @@ public class InventoryClickEventListener implements Listener {
             switch (guiType) {
                 case TICKET_VIEWER -> handleTicketViewerGUI(event, player, item);
                 case TICKET_OPTIONS -> handleTicketOptionsGUI(event, player);
+                case GROUP_SELECT -> handleGroupSelectGUI(event, player);
                 // Add more cases for other GUI types here
                 default -> {}
             }
         }
     }
+
+    private void handleGroupSelectGUI(InventoryClickEvent event, Player player){
+        event.setCancelled(true);
+        Ticket ticket = TicketManager.CURRENT_TICKETS.get(TICKET_STORED.get(player.getUniqueId()));
+
+        ItemStack item = event.getInventory().getItem(event.getSlot());
+        if (item != null){
+            String groupName = PlainTextComponentSerializer.plainText().serialize(item.getItemMeta().displayName());
+
+            ticket.setSupportGroup(groupName);
+            TicketManager.updateTicket(ticket);
+            player.sendMessage("Support Group Updated!");
+
+            player.closeInventory();
+            new TicketViewer().ticketViewer(player);
+        }
+    }
+
     private void handleTicketOptionsGUI(InventoryClickEvent event, Player player) {
         event.setCancelled(true);
-        String inventoryTitle = PlainTextComponentSerializer.plainText().serialize(event.getView().title());
-        String[] parts = inventoryTitle.split("»");
-        Ticket ticket = TicketManager.CURRENT_TICKETS.get(UUID.fromString(parts[1].trim()));
+        Ticket ticket = TicketManager.CURRENT_TICKETS.get(TICKET_STORED.get(player.getUniqueId()));
         int slotClicked = event.getSlot();
         switch (slotClicked) {
             case 2:
@@ -60,7 +82,7 @@ public class InventoryClickEventListener implements Listener {
                 break;
             case 5:
                 player.closeInventory();
-                new GroupSelect().groupSelect(player, ticket);
+                new GroupSelect().groupSelect(player);
                 break;
             case 6:
                 player.closeInventory();
@@ -73,14 +95,14 @@ public class InventoryClickEventListener implements Listener {
     private void handleTicketViewerGUI(InventoryClickEvent event, Player player, ItemStack item) {
         event.setCancelled(true);
         ClickType clickType = event.getClick();
-        NamespacedKey key = new NamespacedKey(OpenTickets.plugin, "TICKET_UUID");
         UUID ticketUUID = UUID.fromString(Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING)));
         Ticket ticket = TicketManager.CURRENT_TICKETS.get(ticketUUID);
+        TICKET_STORED.put(player.getUniqueId(), ticketUUID);
 
         switch (clickType) {
             case LEFT -> {
                 player.closeInventory();
-                new TicketOptions().ticketOptions(player, ticket);
+                new TicketOptions().ticketOptions(player);
             }
             case RIGHT -> {
                 // Open Notes Viewer directly.

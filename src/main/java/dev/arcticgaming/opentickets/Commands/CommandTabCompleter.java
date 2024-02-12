@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommandTabCompleter implements TabCompleter {
 
@@ -25,21 +26,25 @@ public class CommandTabCompleter implements TabCompleter {
             commands.add("change_group");
             commands.add("create");
             commands.add("reload");
+            commands.add("rename"); // Add rename to the list of commands
             StringUtil.copyPartialMatches(args[0], commands, completions);
         } else if (args.length == 2) {
-            // Specific for add_note and change_group which require UUID
-            if (args[0].equalsIgnoreCase("add_note") || args[0].equalsIgnoreCase("change_group")) {
+            // Extend the specific command to include "rename"
+            if (args[0].equalsIgnoreCase("add_note") || args[0].equalsIgnoreCase("change_group") || args[0].equalsIgnoreCase("rename")) {
+                // For "rename", include both UUIDs and ticket names as options
                 TicketManager.CURRENT_TICKETS.keySet().forEach(uuid -> commands.add(uuid.toString()));
                 StringUtil.copyPartialMatches(args[1], commands, completions);
             }
         } else if (args.length == 3) {
-            // Specific for change_group which requires a support group name after the UUID
+            // This block might be reserved for future extensions where "rename" might require additional arguments
             if (args[0].equalsIgnoreCase("change_group")) {
                 TicketManager.SUPPORT_GROUPS.forEach(group -> commands.add(group));
                 StringUtil.copyPartialMatches(args[2], commands, completions);
             }
+            // Potentially handle "rename" command's third argument here
         }
 
-        return completions;
+        // Ensure completions are unique to avoid duplicates from UUIDs and Names
+        return completions.stream().distinct().collect(Collectors.toList());
     }
 }

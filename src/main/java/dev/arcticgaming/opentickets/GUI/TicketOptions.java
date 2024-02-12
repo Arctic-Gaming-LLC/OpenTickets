@@ -1,6 +1,5 @@
 package dev.arcticgaming.opentickets.GUI;
 
-import dev.arcticgaming.opentickets.Objects.Ticket;
 import dev.arcticgaming.opentickets.OpenTickets;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
@@ -18,11 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TicketOptions implements InventoryHolder, Listener {
-
-    Component guiTitle = Component.text()
-            .content("Ticket Controls")
-            .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
-            .build();
     Component groupControlTitle = Component.text()
             .content("Change Support Group")
             .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
@@ -48,10 +42,10 @@ public class TicketOptions implements InventoryHolder, Listener {
             .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
             .build();
     
-    public void ticketOptions(Player player, Ticket ticket) {
+    public void ticketOptions(Player player) {
 
         Component guiTitle = Component.text()
-                .content("Ticket Controls :" + ticket.ticketUUID)
+                .content("Ticket Controls")
                 .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
                 .build();
 

@@ -21,9 +21,9 @@ public class GroupSelect implements InventoryHolder, Listener {
 
 
 
-    public void groupSelect(Player player, Ticket ticket) {
+    public void groupSelect(Player player) {
         Component guiTitle = Component.text()
-                .content("Select Group »" + ticket.ticketUUID)
+                .content("Select Group")
                 .color(TextColor.color(OpenTickets.PRIMARY_COLOR))
                 .build();
 
