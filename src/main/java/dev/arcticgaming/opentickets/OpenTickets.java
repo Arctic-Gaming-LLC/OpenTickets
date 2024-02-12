@@ -36,6 +36,7 @@ public final class OpenTickets extends JavaPlugin implements Listener {
 
         getConfig();
         saveDefaultConfig();
+        updateConfigWithNewOptions();
 
         //Get Config Options for coloration
         PRIMARY_COLOR = TextColor.fromHexString(getConfig().getString("Colors.primary_color"));
@@ -100,5 +101,10 @@ public final class OpenTickets extends JavaPlugin implements Listener {
                 limit--;
             }
         }
+    }
+
+    private void updateConfigWithNewOptions() {
+        plugin.getConfig().options().copyDefaults(true);
+        plugin.saveConfig();
     }
 }
