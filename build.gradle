@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'dev.arcticgaming'
-version = '2.2.0_DEV'
+version = '2.3.1'
 
 repositories {
     mavenCentral()

@@ -8,6 +8,7 @@ import dev.arcticgaming.opentickets.Objects.Ticket;
 import dev.arcticgaming.opentickets.OpenTickets;
 import dev.arcticgaming.opentickets.Utils.LocUtil;
 import dev.arcticgaming.opentickets.Utils.TicketManager;
+import dev.arcticgaming.opentickets.Utils.TicketUtil;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
@@ -94,6 +95,17 @@ public class InventoryClickEventListener implements Listener {
     }
     private void handleTicketViewerGUI(InventoryClickEvent event, Player player, ItemStack item) {
         event.setCancelled(true);
+
+        if(event.getSlot() == 49){
+            if (!event.isRightClick() && TicketUtil.playerViewPreferences.get(player.getUniqueId()) != null) {
+                TicketUtil.togglePlayerViewPreference((Player) event.getWhoClicked());
+            } else {
+                TicketUtil.setPlayerViewPreference((Player) event.getWhoClicked(), "default");
+            }
+            new TicketViewer().ticketViewer((Player)event.getWhoClicked());
+            return;
+        }
+
         ClickType clickType = event.getClick();
         UUID ticketUUID = UUID.fromString(Objects.requireNonNull(item.getItemMeta().getPersistentDataContainer().get(key, PersistentDataType.STRING)));
         Ticket ticket = TicketManager.CURRENT_TICKETS.get(ticketUUID);

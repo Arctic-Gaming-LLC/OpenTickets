@@ -25,6 +25,9 @@ Support Groups:
 
 Ticket Notifications: true
 
+# Can the players who own a ticket view them by default?
+Owners can view: true
+
 #-----| Overrides
 #
 # Set your default world in case a teleport world location returns null:
